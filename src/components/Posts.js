@@ -1,49 +1,45 @@
 import React from 'react';
 import PostDetail from './PostDetail'
-import {posts} from '../data/store.js'
+import {posts, categoryAll} from '../data/store.js'
+import Categories from './Categories'
 
-// const posts = [
-//     {
-//         id : 1,
-//         title : "Introduction to Quantum Physics",
-//         author : "Bill",
-//         category : "Quantum",
-//         content : "A deep dive into the Quantum World"
-//     },
-//     {
-//         id : 2,
-//         title : "Introduction to Classical Physics",
-//         author : "Jake",
-//         category : "Classical",
-//         content : "A deep dive into the Classical Physics"  
-//     }
-// ]
+class Posts extends React.Component {
 
-// const transformToJSX = (jsObject) => {
-//     return (
-//     <div key={jsObject.id}>
-//         <div>
-//             <h4>Title: {jsObject.title}</h4>
-//         </div>
-//         <div>
-//             <h4>Author: {jsObject.author}</h4>
-//         </div>
-//         <div>
-//             <h4>Category: {jsObject.category}</h4>
-//         </div>
-//         <div>
-//             <p>{jsObject.content}</p>
-//         </div>
-//         <hr />
-//     </div>
-//     );
-// }
+    constructor() {
+        super();
+        
+        this.state = {
+            posts: posts,
+            selectedCategory: categoryAll
+        };
 
-// const postsJSX = posts.map(transformToJSX) 
+        this.handleCategorySelect = this.handleCategorySelect.bind(this);
+    }
 
-const Posts = () => 
-    <div>
-        {posts.map(p => <PostDetail key={p.id} post={p} />)}
-    </div>
+    handleCategorySelect(selectedCategory) {
+        this.setState({
+            selectedCategory: selectedCategory
+        });
+    }
+    render() {
+
+        const selectedCategory = this.state.selectedCategory;
+        
+        const posts = this.state.posts;
+
+        const filteredPosts = selectedCategory.id === 'all' ? posts : this.state.posts.filter(post => post.category === selectedCategory.id);
+        return (
+        <div className="row">
+            <div className="col-3">
+                <Categories  onCategorySelect={this.handleCategorySelect}/>
+            </div>
+            <div className="col">
+                <small className="text-muted"> Slected Category: {this.state.selectedCategory.name}</small>
+                {filteredPosts.length > 0 ? filteredPosts.map(p => <PostDetail key={p.id} post={p} />) : <div className="alert alert-info"> No posts found for this category </div>}
+            </div>
+        </div> 
+        );
+    }
+}
 
 export default Posts;

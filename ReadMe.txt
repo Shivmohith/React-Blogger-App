@@ -23,3 +23,16 @@ multiple exports have to be named exports
 2 types of exports: 1. Named exports
                     2. Default exports
 
+
+classes should have render method!
+
+state is an object pasrt of the Component class in React
+
+Rule in js: a derived class has to call the parent class's constructor first 
+
+"this" points to the global object
+
+In javascript functions are objects so functions have properties and methods
+/* Common interview question */
+".bind" returns a new function reference after binding the "this" 
+".call" just attches the "this"
