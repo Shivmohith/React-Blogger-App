@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App'
+
 
 ReactDOM.render(
 <App />,
@@ -12,17 +14,5 @@ document.getElementById('root')
                            React.createElement("p", null, " A simple blogging app in React! ")); */ 
 // ReactDOM.render(<h1> Blogger App </h1>, document.querySelector('#root')); // another way
 
-/* Name of the function should be in Pascal case - start with capital letter so that it doesn't conflict with the standard HTML elements' name */
-/* Component */
-function Header() {
-    return <div> 
-                <h1> Blogger App </h1>
-                <p> A simple blogging app in React! </p>
-           </div>;
-}
 
-function App() {
-    return <div>
-        <Header />
-    </div>
-}
+

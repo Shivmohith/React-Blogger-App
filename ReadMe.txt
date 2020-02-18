@@ -12,3 +12,14 @@ package.json is the configuration files - all node.js files have package.json
 jest framework is used for testing
 
 "npm start" is used in dev environment 
+
+every component has to be kept in its own file
+
+Technical Notes:
+
+you can export anything - classes, functions, variables; to use it in a different file, you have to use "import" keyword
+multiple exports have to be named exports
+"export default" - another syntax for exporting; if you use "export default", while importing you don't have to use curly brackets
+2 types of exports: 1. Named exports
+                    2. Default exports
+
