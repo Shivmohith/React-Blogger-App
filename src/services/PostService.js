@@ -16,10 +16,17 @@ class PostService {
 
     update(post) {
         // code to update
+        
+
     }
 
     delete(postId) {
         // code to delete
+        const index = posts.findIndex(post => post.id === postId);
+        if (index !== -1) {
+            posts.splice(index, 1);
+        }
+        
     }
 }
 

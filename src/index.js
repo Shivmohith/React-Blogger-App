@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App'
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import {BrowserRouter} from 'react-router-dom'
 
 ReactDOM.render(
-<App />,
+<BrowserRouter>
+    <App />
+</BrowserRouter>,
 document.getElementById('root')
 ); /* first parameter is JSX and put/render the JSX(HTML) code inside the second parameter (div tag)
       first parameter is JSX, not HTMl, though it looks like it. This JSX is converted (by React library) into 
