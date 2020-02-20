@@ -1,20 +1,27 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import Header from './Header';
-import Posts from './Posts';
-import {Route} from 'react-router-dom';
 import Home from './Home';
-import PostForm from './PostForm';
+import Posts from './Posts';
 import PostDetail from './PostDetail';
+import PostFormCreate from './PostFormCreate';
+import PostFormUpdate from './PostFormUpdate'
 
-const App = () => 
+const App = () => {
+  return (
     <div className="container">
-        <Header />
+      <Header />
 
-        <Route exact path = "/" component={Home} />
-        <Route exact path = "/posts" component={Posts} />
-        <Route path = "/posts/:id" component={PostDetail} />
-        <Route path = "/create-new-post" component={PostForm} />
-        
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/posts" component={Posts} />
+        <Route exact path="/posts/create" component={PostFormCreate} />
+        <Route exact path="/posts/:id" component={PostDetail} />
+        <Route path="/posts/:id/edit" component={PostFormUpdate} />
+      </Switch>
     </div>
+  );
+};
 
 export default App;

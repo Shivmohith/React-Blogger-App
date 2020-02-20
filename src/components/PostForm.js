@@ -1,127 +1,125 @@
-import React from 'react';
-import categoryService from '../services/CategoryService'
-import postService from '../services/PostService'
+import React, { Component } from 'react';
 
-class PostForm extends React.Component {
+import categoryService from '../services/CategoryService';
 
-    state = {
-        categories: [],
-        title: "",
-        author: "",
-        content: "",
-        category: ""
+class PostForm extends Component {
+  state = {
+    id: 0,
+    title: '',
+    content: '',
+    author: '',
+    category: '',
 
+    initialized: false,
+    categories: []
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.operation === 'Update' && props.post && !state.initialized) {
+      return {
+        ...props.post,
+        initialized: true
+      };
     }
 
-    componentDidMount() {
-        const categories = categoryService.getAll();
-        this.setState({ 
-            categories: categories 
-        });
-    }
+    return null;
+  }
 
-    handleChange = (e) => {
-        const {name, value} = e.target;
-        this.setState({
-            [name]: value
-        })
-    }
+  componentDidMount() {
+    const categories = categoryService.getAll();
+    this.setState({ categories });
+  }
 
-    // handleTitleChange = (e) => {
-    //     this.setState({ 
-    //         title: e.target.value
-    //     })
-    // }
+  handleSubmit = e => {
+    e.preventDefault();
 
-    // handleContentChange = (e) => {
-    //     this.setState({
-    //         content: e.target.value
-    //     })
-    // }
+    const { id, title, content, author, category } = this.state;
+    this.props.onSubmit({
+      id,
+      title,
+      content,
+      author,
+      category
+    });
+  }
 
-    // handleAuthorChange = (e) => {
-    //     this.setState({
-    //         author: e.target.value
-    //     })
-    // }
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
-    // handleCategoryChange = (e) => {
-    //     this.setState({
-    //         category: e.target.value
-    //     })
-    // }
+  render() {
+    const { operation } = this.props;
+    const { title, content, author, category, categories } = this.state;
 
-    handleFormSubmit = (e) => {
-        e.preventDefault();
+    return <div>
+      <h4 className="mr-3">{operation} Post</h4>
 
-        const {title, content, author, category} = this.state;
-        
-        const post = {
-            title,
-            author,
-            content,
-            category,
-            id: Date.now()
-            // title: this.state.title,
-            // author: this.state.author,
-            // content: this.state.content,
-            // category: this.state.category,
-        }
+      <div className="card bg-light">
+        <div className="card-content">
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                name="title"
+                placeholder="Enter title"
+                value={title}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="content">content</label>
+              <textarea
+                className="form-control"
+                id="content"
+                name="content"
+                placeholder="Enter content"
+                rows="3"
+                cols="30"
+                value={content}
+                onChange={this.handleChange}
+              >
+              </textarea>
+            </div>
+            <div className="form-group">
+              <label htmlFor="author">Author</label>
+              <input
+                type="text"
+                className="form-control"
+                id="author"
+                name="author"
+                placeholder="Enter author"
+                value={author}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="category">Category</label>
+              <select
+                required
+                className="form-control"
+                id="category"
+                name="category"
+                value={category}
+                onChange={this.handleChange}
+              >
+                <option value="">--Select--</option>
+                {categories.map(c => <option
+                  key={c.id} value={c.id}>{c.name}</option>
+                )}
+              </select>
+            </div>
 
-        postService.create(post);
-        this.props.history.push('/posts');
-    }
+            <button type="submit" className="btn btn-primary">Save</button>
+          </form>
+        </div>
+      </div>
 
-    render() {
-
-        const {title, author, content, category, categories} = this.state;
-
-        // const title = this.state.title;
-        // const author = this.state.author;
-        // const content = this.state.content;
-        // const category = this.state.category;
-        // const categories = this.state.categories;
-        return (
-              
-            <div>
-                <h3 className="mr-3">Post Form</h3>
-            
-                <div className="card bg-light">
-                <div className="card-body">
-                    <form onSubmit={this.handleFormSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="title">Title</label>
-                        <input required onChange={this.handleChange} type="text" className="form-control" id="title" name="title" placeholder="Enter title" value={title}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="content">Content</label>
-                        <textarea required onChange={this.handleChange} type="text" className="form-control" id="content" name="content" placeholder="Enter content" rows="3" cols="30" value={content}>
-                            
-                        </textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="author">Author</label>
-                        <input required onChange={this.handleChange} type="text" className="form-control" id="author" name="author" placeholder="Enter author" value={author}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="category">Category</label>
-                        <select required onChange={this.handleChange} className="form-control" id="category" name="category" value={category}>
-                        <option value="">-Select Category-</option>
-                        {categories.map(c => 
-                            <option key={c.id} value={c.name}>{c.name}</option> 
-                            )}
-                        </select>
-                    </div>
-            
-                    <button type="submit" className="btn btn-primary">Save</button>
-                    </form>
-                </div>
-                </div>
-          
-          </div>
-
-        );
-    }
+    </div>;
+  }
 }
 
 export default PostForm;

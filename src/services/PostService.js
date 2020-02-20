@@ -1,33 +1,42 @@
-import {posts} from '../data/store';
+import { posts } from '../data/store';
 
 class PostService {
-    getAll() {
-        return posts;
+  getAll() {
+    return posts;
+  }
+
+  get(id) {
+    const post = posts.find(p => p.id === id);
+    return post;
+  }
+
+  create(post) {
+    post.id = Date.now();
+    posts.push(post);
+    return post;
+  }
+
+  update(post) {
+    const postToUpdate = posts.find(p => p.id === post.id);
+
+    if (postToUpdate) {
+      postToUpdate.title = post.title;
+      postToUpdate.body = post.body;
+      postToUpdate.author = post.author;
+      postToUpdate.category = post.category;
     }
 
-    get(postId) {
-        const post = posts.find(post => post.id === postId);
-        return post;
-    }
+    return postToUpdate;
+  }
 
-    create(newPost) {
-        posts.push(newPost);
-    }
+  delete(id) {
+    const index = posts.findIndex(p => p.id === id);
 
-    update(post) {
-        // code to update
-        
-
+    if (index >= 0) {
+      posts.splice(index, 1);
     }
-
-    delete(postId) {
-        // code to delete
-        const index = posts.findIndex(post => post.id === postId);
-        if (index !== -1) {
-            posts.splice(index, 1);
-        }
-        
-    }
+  }
 }
 
-export default new PostService();
+const serviceInstance = new PostService();
+export default serviceInstance;
