@@ -4,10 +4,15 @@ import PostForm from './PostForm';
 import postService from '../services/PostService';
 
 class PostFormCreate extends Component {
-  handleSubmit = post => {
+  handleSubmit = async post => {
+    try {
     delete post.id;
-    postService.create(post);
+    await postService.create(post);
     this.props.history.push('/posts');
+    } catch (error) {
+      console.log('Creation of post failed');
+      console.log('Error:',error);
+    }
   }
 
   render() {

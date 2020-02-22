@@ -73,3 +73,38 @@ ROUTING:
 Based on the URL you show that component
 Query parameters is different from URL parameters
 Query parameters are always inserted at the end of the URL
+
+
+
+async and await:
+    Whenever a function returns a promise, use await in front of it
+
+
+REDUX: 
+
+If some data has to be used by more than one component, use redux.
+It is a javascript library
+
+Redux has a Store/State:
+                    {
+                        categories: [], ------------------------> categoriesReducer
+                        posts: [], ------------------------> postsReducer
+                        selectedCategory: "" ------------------------> selectedCategoryReducer
+                    }
+Components cannot modify/touch/get data from the store/state directly. There is a procedure for that.
+
+Each component has to create an Action,
+                                    {
+                                        type: "CREATE POST",
+                                        payload: {...}
+                                    }
+This action has to be passed to Dispatch. Action is created by ActionCreator.
+                                    (
+                                        Action
+                                    )
+This Dispatch will invoke Reducers. Each reducer has authority on only one property.
+                                    Reducers(1st parameter: that category in the state, 2nd parameter: Action object)
+                                                Reducers reads the "type" in Action and performs accordingly
+
+All components may not need all the properties of the store.
+So components can subscribe to particular properties and they will be updated/ with all the changes.

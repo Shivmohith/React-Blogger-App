@@ -1,8 +1,15 @@
-import {categories} from '../data/store'
+import {categories} from '../data/store';
+import {apiBaseUrl} from '../constants';
 
 class CategoryService {
+
+    apiCategoriesUrl = `${apiBaseUrl}/categories`;
+
     getAll() {
-        return categories
+        return fetch(this.apiCategoriesUrl)
+            .then(response => {
+                return response.json();
+            })
     }
 
     get(categoryId) {

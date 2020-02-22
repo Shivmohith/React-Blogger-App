@@ -23,9 +23,14 @@ class Posts extends Component {
   //   this.setState({ selectedCategory: category });
   // }
 
-  componentDidMount() {
-    const posts = postService.getAll();
-    this.setState({ posts });
+  async componentDidMount() {
+    try {
+      const posts = await postService.getAll();
+      this.setState({ posts });
+    } catch (error) {
+      console.error('Get posts failed');
+      console.log('Error:', error);
+    }
   }
 
   handlePostDelete = (id) => {

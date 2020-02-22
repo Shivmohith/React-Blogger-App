@@ -8,18 +8,28 @@ class PostDetail extends React.Component {
         post: null
     }
     
-    componentDidMount() {
-        const post = postService.get(parseInt(this.props.match.params.id));
+    async componentDidMount() {
+        try {
+        const post = await postService.get(parseInt(this.props.match.params.id));
         this.setState({ 
             post: post
         });
+    } catch (error) {
+        console.log('Get by Id failed');
+        console.log('Error:',error);
+    }
     }
 
-    handlePostDelete = () => {
-        if (window.confirm('Are you sure you want to delete?')) {
-            postService.delete(this.state.post.id);
-            this.props.history.push('/posts');
-        }
+    handlePostDelete = async () => {
+        try {
+            if (window.confirm('Are you sure you want to delete?')) {
+                await postService.delete(this.state.post.id);
+                this.props.history.push('/posts');
+            }
+    } catch (error) {
+        console.log('Post Delete failed');
+        console.log('Error:',error);
+    }
     }
 
     render() {

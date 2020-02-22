@@ -13,7 +13,7 @@ const Navigation = () => {
                 <NavLink exact className="nav-link " to="/posts" activeClassName="active"> Posts </NavLink>           
             </li>
             <li className="nav-item">
-                <NavLink exact className="nav-link " to="/create-new-post" activeClassName="active"> New Post </NavLink>            
+                <NavLink exact className="nav-link " to="/posts/create" activeClassName="active"> New Post </NavLink>            
             </li>
             
         </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import {categoryAll} from '../constants/index';
-import categoryService from '../services/CategoryService'
-
+// import categoryService from '../services/CategoryService'
+import { connect } from 'react-redux';
 class Categories extends React.Component {
     
-    state = {
-        categories: []
-    }
+    // state = {
+    //     categories: []
+    // }
     // constructor() {
     //     super();
 
@@ -15,17 +15,23 @@ class Categories extends React.Component {
     //     }
     // }
 
-    componentDidMount() {
-        const categories = categoryService.getAll();
-        this.setState({
-            categories: categories
-        })
-    }
+    // async componentDidMount() {
+    //     try {
+    //         const categories = await categoryService.getAll();
+            
+    //         this.setState({
+    //             categories: categories
+    //         })
+    //     } catch (error) {
+    //         console.log('Get all categories failed');
+    //         console.log('Error: ',error);
+    //     }
+    // }
     
 
     render() {
 
-        const categoriesWithAll = [categoryAll, ...this.state.categories];
+        const categoriesWithAll = [categoryAll, ...this.props.categories];
         return (
         <div>
             <div> 
@@ -40,5 +46,9 @@ class Categories extends React.Component {
 }
 
 
-
-export default Categories;
+const mapStateToProps = state => {
+    return {
+        categories: state.categories
+    };
+};
+export default connect(mapStateToProps, null)(Categories);
